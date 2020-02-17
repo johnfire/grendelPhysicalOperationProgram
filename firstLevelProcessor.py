@@ -17,7 +17,7 @@ processFotoPath ="/media/grendelData102/lowLevelPrograms/processFoto.py "
 run = True
 #os.system('cd')
 while (run == True):
-    print("starting message checking loop now")
+    print("starting message handling loop now")
     #check for incoming new message
     newMsgs = os.listdir(msgPath)
     #print(newMsgs)
