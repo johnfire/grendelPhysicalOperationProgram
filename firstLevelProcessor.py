@@ -6,66 +6,42 @@
 
 import os
 import json
-
-msgPath = "/media/grendelData102/GrendelData/grendelMsgs/"
-fotoPath = "/media/grendelData102/GrendelData/grendelFotos/"
-audioPath = "/media/grendelData102/GrendelData/grendellAudio/"
-grendelOtherData = "/media/grendelData102/GrendelData/grendelOtherData/"
-grendelPeopleData = "/media/grendelData102/GrendelData/grendelPeopleData/"
-processFotoPath ="/media/grendelData102/lowLevelPrograms/processFoto.py "
+import grendelconfig as gc
 
 run = True
-#os.system('cd')
 while (run == True):
     print("starting message handling loop now")
     #check for incoming new message
-    newMsgs = os.listdir(msgPath)
+    newMsgs = os.listdir(gc.msgPathPY)
     #print(newMsgs)
     #print ('***********')
     for each in newMsgs:
-        if os.path.isfile(msgPath + each):
+        if os.path.isfile(gc.msgPathPY + "/" + each):
             ##need method to check for new messages here, if none loop
-            with open(msgPath + each) as f:
+            with open(gc.msgPathPY + "/" + each) as f:
                 msgData =json.load(f)
-
-            msgType = msgData[0]
-            msgDataPiece = msgData[1]
-            msgTime =msgData[2]
-            msgCreator = msgData[3]
-    
-            #print(each)
-            #print(msgData)
-            #print('!!!!!!!!!!!')
-            #print (msgType,'   ', msgDataPiece,'   ',msgTime,'    ', msgCreator)
-
-            #if its a kill message, set run level to false and break out of loop, kill program. 
-        
+            #if its a kill message, set run level to false and break out of loop, kill program.
             if msgData[0] == "kill":
                 run = False
-                break  
- 
+                break
             # select a processing program and a location to run  process
-
             elif msgData[0] == "newfoto":
                 #print(msgDataPiece)
                 print("sending new foto data for processing")
-                os.system(processFotoPath+ msgDataPiece)
-                #send off command to do process 
+                pass
+                #send off command to do process
             elif msgData[0] == "newaudio":
                 print("sending new audio data for processing")
-                #send off command to do process 
+                #send off command to do process
             elif msgData[0] == "newtext":
                 print("sending new text data for processing")
-                #send off command to do process 
+                #send off command to do process
             else:
                 print("I don't know how to process that data")
                 print(each)
-
             #move message to processed folder
-            os.system('mv ' + msgPath + each + ' ' + msgPath + 'processedMsgs/')
+            os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
             #do it again
         else:
             pass
             #do nothing, loop and wait for more messages
-
-	
