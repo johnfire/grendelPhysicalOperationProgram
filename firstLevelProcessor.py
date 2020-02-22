@@ -5,7 +5,8 @@
 # by christopher Rehm. 15 dec 2019
 
 import os
-import json
+import sys
+import time
 import grendelconfig as gc
 
 run = True
@@ -16,32 +17,30 @@ while (run == True):
     #print(newMsgs)
     #print ('***********')
     for each in newMsgs:
-        if os.path.isfile(gc.msgPathPY + "/" + each):
-            ##need method to check for new messages here, if none loop
-            with open(gc.msgPathPY + "/" + each) as f:
-                msgData =json.load(f)
-            #if its a kill message, set run level to false and break out of loop, kill program.
-            if msgData[0] == "kill":
-                run = False
-                break
-            # select a processing program and a location to run  process
-            elif msgData[0] == "newfoto":
-                #print(msgDataPiece)
-                print("sending new foto data for processing")
-                pass
-                #send off command to do process
-            elif msgData[0] == "newaudio":
-                print("sending new audio data for processing")
-                #send off command to do process
-            elif msgData[0] == "newtext":
-                print("sending new text data for processing")
-                #send off command to do process
-            else:
-                print("I don't know how to process that data")
-                print(each)
-            #move message to processed folder
-            os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
-            #do it again
+        mymessage = gc.message.read(each,"PY")
+
+        # select a processing program and a location to run  process
+        if mymessage[1] == "newfoto":
+            #print(msgDataPiece)
+            print("sending new foto data for processing")
+            #send off command to do process
+        elif mymessage[1] == "newaudio":
+            print("sending new audio data for processing")
+            #send off command to do process
+        elif mymessage[1] == "newtext":
+            print("sending new text data for processing")
+            #send off command to do process
+        elif mymessage[1] == "shutdownGrendel":
+            #save any data
+            sys.exit()
         else:
-            pass
-            #do nothing, loop and wait for more messages
+            print("I don't know how to process that data")
+            print(mymessage)
+            x= input("blabblah")
+    mytime = time.time()
+    mymessage = gc.message
+    mymessage.write(mytime,"testttttt","arggggg blahblahblah and blah", "AI", "!" , "PY","NOONE", "NONE")
+    myanswer = input("any key to continue")
+    #move message to processed folder
+    os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+    #do it again
