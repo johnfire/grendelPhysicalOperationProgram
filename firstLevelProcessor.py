@@ -12,7 +12,6 @@ import grendelconfig as gc
 firsttime =  True
 run = True
 while (run == True):
-
     gc.debugBreakPoint("starting PY loop", "firstLevelProcessor")
     #check for incoming new message
     newMsgs = os.listdir(gc.msgPathPY)
