@@ -6,49 +6,45 @@
 
 import os
 import sys
-import time
+#import time
 import grendelconfig as gc
-
-def makeMsg(title, text, primeRecipient, priority, otherRecievers, files):
-    mytime = time.time()
-    mymessage = gc.message()
-    mymessage.write(mytime, title, text,primeRecipient, priority, "PY", otherRecievers, files)
-
 
 firsttime =  True
 run = True
 while (run == True):
     print("starting message handling loop now")
-    gc.debugBreakPoint("PY1")
+    gc.debugBreakPoint("starting PY loop", "firstLevelProcessor")
     #check for incoming new message
     newMsgs = os.listdir(gc.msgPathPY)
-    #print(newMsgs)
-    #print ('***********')
+    gc.debugBreakPoint("-+-+-+-+-+-++ starting firstlevelprocessor-+-+-+-+-+-+-+-+-", "FLP")
     if firsttime == True:
-        makeMsg("Py startup","starting py program","AI", "3" ,"NOONE", "NONE")
+        gc.makeMsg("PY","Py startup","starting py program","AI", "3" ,"NOONE", "NONE")
         firsttime = False
+    gc.debugBreakPoint("now gettin messGES for flp","flp")
     for each in newMsgs:
         mymessage = gc.message()
-        mymessage.read(each,"PY")
+        print(each)
+        mydata = mymessage.read(each,"PY")
         # select a processing program and a location to run  process
-        if mymessage[1] == "newfoto":
+        if mymessage.title == "newfoto":
             #print(msgDataPiece)
             print("sending new foto data for processing")
             #send off command to do process
-        elif mymessage[1] == "newaudio":
+        elif mymessage.title == "newaudio":
             print("sending new audio data for processing")
             #send off command to do process
-        elif mymessage[1] == "newtext":
+        elif mymessage.title == "newtext":
             print("sending new text data for processing")
             #send off command to do process
-        elif mymessage[1] == "shutdownGrendel":
+        elif mymessage.title == "shutdown":
             #save any data
             sys.exit()
         else:
             print("I don't know how to process that data")
-            #print(mymessage)
-            makeMsg("testttttt","arggggg blahblahblah and blah","AI", "!" ,"NOONE", "NONE")
-            gc.debugBreakPoint("PY2")
+            pass#
         #move message to processed folder
         os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+        #os.system('mv ' + gc.msgPathAI + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+    gc.makeMsg("PY","testttttt","arggggg blahblahblah and blah","AI", "!" ,"NOONE", "NONE")
+    gc.debugBreakPoint("end loop" , "firstLevelProcessor")
     #do it again
