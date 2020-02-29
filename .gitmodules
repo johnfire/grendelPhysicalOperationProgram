@@ -1,0 +1,6 @@
+[submodule "grendelShares"]
+	path = grendelShares
+	url = https://github.com/johnfire/grendelShares.git
+[submodule "grendelSmallPrograms"]
+	path = grendelSmallPrograms
+	url = https://github.com/johnfire/grendelSmallPrograms.git
