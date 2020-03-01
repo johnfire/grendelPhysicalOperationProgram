@@ -9,10 +9,59 @@ import sys
 #import time
 import grendelconfig as gc
 
+############################################################
+
+def shutdownMe():
+    gc.debugBreakPoint("Closing down first level processor", "FLP")
+    pass
+
+def activateCam1():
+    pass
+
+def activateCam2():
+    pass
+
+def activateHearing():
+    pass
+
+def deactivateHearing():
+    pass
+
+def sendInternetInquiry():
+    pass
+
+def moveHead():
+    pass
+
+def moveWiglaf():
+    pass
+
+def moveAsmo():
+    pass
+
+def recieveInternet():
+    pass
+
+def processFoto():
+    pass
+
+def ProcessInfo():
+    pass
+
+def ProcessVideo():
+    pass
+
+def ProcessHumanspeech():
+    pass
+
+def shutdown():
+    pass
+
+########################################################
 firsttime =  True
 run = True
 while (run == True):
-    gc.debugBreakPoint("starting PY loop", "firstLevelProcessor")
+    gc.debugBreakPoint("Starting PY loop", "firstLevelProcessor")
     #check for incoming new message
     newMsgs = os.listdir(gc.msgPathPY)
     gc.debugBreakPoint("-+-+-+-+-+-++ starting firstlevelprocessor-+-+-+-+-+-+-+-+-", "FLP")
@@ -20,7 +69,7 @@ while (run == True):
         os.chdir(gc.msgPathPY)
         gc.makeMsg("PY","Py startup","starting py program","AI", "3" ,"NOONE", "NONE")
         firsttime = False
-    gc.debugBreakPoint("now gettin messGES for flp","flp")
+    gc.debugBreakPoint("Now getting messages for flp","flp")
     for each in newMsgs:
         mymessage = gc.message()
         print(each)
@@ -38,13 +87,13 @@ while (run == True):
             #send off command to do process
         elif mymessage.title == "shutdown":
             #save any data
+            shutdownMe()
             sys.exit()
         else:
             print("I don't know how to process that data")
             pass#
         #move message to processed folder
         os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
-        #os.system('mv ' + gc.msgPathAI + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
     gc.makeMsg("PY","testttttt","arggggg blahblahblah and blah","AI", "!" ,"NOONE", "NONE")
-    gc.debugBreakPoint("end loop" , "firstLevelProcessor")
+    gc.debugBreakPoint("End loop" , "firstLevelProcessor")
     #do it again
