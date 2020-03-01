@@ -9,6 +9,8 @@ import sys
 #import time
 import grendelconfig as gc
 
+DEBUG = True
+
 ############################################################
 
 def shutdownMe():
@@ -67,33 +69,33 @@ while (run == True):
     gc.debugBreakPoint("-+-+-+-+-+-++ starting firstlevelprocessor-+-+-+-+-+-+-+-+-", "FLP")
     if firsttime == True:
         os.chdir(gc.msgPathPY)
-        gc.makeMsg("PY","Py startup","starting py program","AI", "3" ,"NOONE", "NONE")
+        gc.makeMsg("PY","Py startup","starting py program","3", "AI" ,"NOONE", "NONE")
         firsttime = False
     gc.debugBreakPoint("Now getting messages for flp","flp")
     for each in newMsgs:
         mymessage = gc.message()
-        print(each)
+        if DEBUG == True: print(each)
         mydata = mymessage.read(each,"PY")
         # select a processing program and a location to run  process
         if mymessage.title == "newfoto":
             #print(msgDataPiece)
-            print("sending new foto data for processing")
+            if DEBUG == True: print("sending new foto data for processing")
             #send off command to do process
         elif mymessage.title == "newaudio":
-            print("sending new audio data for processing")
+            if DEBUG == True: print("sending new audio data for processing")
             #send off command to do process
         elif mymessage.title == "newtext":
-            print("sending new text data for processing")
+            if DEBUG == True: print("sending new text data for processing")
             #send off command to do process
         elif mymessage.title == "shutdown":
             #save any data
             shutdownMe()
             sys.exit()
         else:
-            print("I don't know how to process that data")
+            if DEBUG == True: print("I don't know how to process that data")
             pass#
         #move message to processed folder
         os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
-    gc.makeMsg("PY","testttttt","arggggg blahblahblah and blah","AI", "!" ,"NOONE", "NONE")
+    gc.makeMsg("PY","testttttt","arggggg blahblahblah and blah","7", "AI" ,"NOONE", "NONE")
     gc.debugBreakPoint("End loop" , "firstLevelProcessor")
     #do it again
