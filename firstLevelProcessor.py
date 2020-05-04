@@ -135,6 +135,6 @@ while (run is True):
                "AI",
                "NOONE",
                "NONE")
-        os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+    #os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
 
     gc.debugBreakPoint("End loop", "firstLevelProcessor")
