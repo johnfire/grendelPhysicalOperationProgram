@@ -8,7 +8,8 @@
 import os
 import sys
 # import time
-import grendelconfig as gc
+import grendelShares.grendelconfig as gc
+import grendelShares.i2cComm as i2CC
 
 DEBUG = True
 
@@ -116,7 +117,13 @@ while (run is True):
         else:
             if DEBUG is True: print("I don't know how to process that data")
         # move message to processed folder
-        os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+        os.system('mv '
+                  + gc.msgPathPY
+                  + "/"
+                  + each
+                  + ' '
+                  + gc.msgPath
+                  + '/processedMsgs/')
     gc.makeMsg("PY",
                "testttttt",
                "arggggg blahblahblah and blah",
