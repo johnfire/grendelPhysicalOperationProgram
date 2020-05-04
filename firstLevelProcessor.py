@@ -10,6 +10,8 @@ import sys
 # import time
 import grendelShares.grendelconfig as gc
 import grendelShares.i2cComm as i2CC
+import subprocess
+import datetime
 
 DEBUG = True
 
@@ -20,12 +22,12 @@ def shutdownMe():
     pass
 
 
-def activateCam1():
-    pass
+def activateCam1(numberOfFotos, sleepTime):
+    subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
 
 
-def activateCam2():
-    pass
+def activateCam2(numberOfFotos, sleepTime):
+    subprocess.call("/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
 
 
 def activateHearing():
@@ -79,22 +81,23 @@ def shutdown():
 ########################################################
 firsttime = True
 run = True
+gc.debugBreakPoint("-+-+-+starting firstlevelprocessor+-+-+-", "FLP")
+if firsttime is True:
+    os.chdir(gc.msgPathPY)
+    gc.makeMsg("PY",
+               "Py startup",
+               "starting py program",
+               "3",
+               "AI",
+               "NOONE",
+               "NONE")
+    firsttime = False
 while (run is True):
     gc.debugBreakPoint("Starting PY loop", "firstLevelProcessor")
     # check for incoming new message
-    newMsgs = os.listdir(gc.msgPathPY)
-    gc.debugBreakPoint("-+-+-+starting firstlevelprocessor+-+-+-", "FLP")
-    if firsttime is True:
-        os.chdir(gc.msgPathPY)
-        gc.makeMsg("PY",
-                   "Py startup",
-                   "starting py program",
-                   "3",
-                   "AI",
-                   "NOONE",
-                   "NONE")
-        firsttime = False
+    print(datetime.datetime.now().time())
     gc.debugBreakPoint("Now getting messages for flp", "flp")
+    newMsgs = os.listdir("/media/grendelData102/GrendelData/grendelMsgs/PY")
     for each in newMsgs:
         mymessage = gc.message()
         if DEBUG is True: print(each)
@@ -111,6 +114,7 @@ while (run is True):
             if DEBUG is True: print("sending new text data for processing")
             # send off command to do process
         elif mymessage.title == "shutdown":
+            os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
             # save any data
             shutdownMe()
             sys.exit()
@@ -131,4 +135,6 @@ while (run is True):
                "AI",
                "NOONE",
                "NONE")
+        os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
+
     gc.debugBreakPoint("End loop", "firstLevelProcessor")
