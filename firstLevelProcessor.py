@@ -9,7 +9,7 @@ import os
 import sys
 # import time
 import grendelShares.grendelconfig as gc
-import grendelShares.i2cComm as i2CC
+#import grendelShares.i2cComm as i2CC
 import subprocess
 import datetime
 
@@ -23,11 +23,11 @@ def shutdownMe():
 
 
 def activateCam1(numberOfFotos, sleepTime):
-    subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
+    subprocess.call(gc.programPath + "grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
 
 
 def activateCam2(numberOfFotos, sleepTime):
-    subprocess.call("/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
+    subprocess.call(gc.programPath + "grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
 
 
 def activateHearing():
@@ -97,7 +97,7 @@ while (run is True):
     # check for incoming new message
     print(datetime.datetime.now().time())
     gc.debugBreakPoint("Now getting messages for flp", "flp")
-    newMsgs = os.listdir("/media/grendelData102/GrendelData/grendelMsgs/PY")
+    newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
         mymessage = gc.message()
         if DEBUG is True: print(each)
