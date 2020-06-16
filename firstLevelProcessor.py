@@ -6,6 +6,7 @@
 
 # by Christopher Rehm. 15 dec 2019
 # add a comment for submodule testing ;
+#if it works once try it a second time in the opposite direction ;
 """
 
 import os
