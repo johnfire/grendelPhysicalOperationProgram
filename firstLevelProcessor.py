@@ -13,6 +13,7 @@ import os
 # import time
 import grendelShares.grendelconfig as gc
 # import grendelShares.i2cComm as i2CC
+
 import subprocess
 import datetime
 
@@ -281,7 +282,7 @@ while (run is True):
     # check for incoming new message
     print(datetime.datetime.now().time())
     gc.debugBreakPoint("Now getting messages for flp", "flp")
-    newMsgs = os.listdir("/media/grendelData102/GrendelData/grendelMsgs/PY")
+    newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
         mymessage = gc.message()
         gc.debugBreakPoint(each, "process loop-- first level processor")
