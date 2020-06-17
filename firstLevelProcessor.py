@@ -31,6 +31,7 @@ def shutdownMe():
     pass
 
 
+##################################################
 def activateCam1(numberOfFotos, sleepTime):
     """Activate camera 1.
 
@@ -49,6 +50,7 @@ def activateCam1(numberOfFotos, sleepTime):
     subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
 
 
+###################################################
 def activateCam2(numberOfFotos, sleepTime):
     """Activate camera 2.
 
@@ -67,6 +69,7 @@ def activateCam2(numberOfFotos, sleepTime):
     subprocess.call("/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
 
 
+###################################################
 def activateHearing():
     """Activate hearing microphones.
 
@@ -78,6 +81,7 @@ def activateHearing():
     pass
 
 
+###################################################
 def deactivateHearing():
     """Deactivate hearing microphones.
 
@@ -89,6 +93,7 @@ def deactivateHearing():
     pass
 
 
+###################################################
 def sendInternetInquiry():
     """Send internet inquiry.
 
@@ -100,6 +105,7 @@ def sendInternetInquiry():
     pass
 
 
+###################################################
 def moveHead(amount, direction):
     """Move head.
 
@@ -118,6 +124,7 @@ def moveHead(amount, direction):
     pass
 
 
+###################################################
 def moveWiglaf(distance, direction):
     """Move wieglaf somewhere.
 
@@ -136,6 +143,7 @@ def moveWiglaf(distance, direction):
     pass
 
 
+###################################################
 def moveAsmo(distance, direction):
     """Move asmo somewhere.
 
@@ -154,6 +162,7 @@ def moveAsmo(distance, direction):
     pass
 
 
+###################################################
 def recieveInternet(message, info, info2):
     """Recieve internet message.
 
@@ -174,6 +183,7 @@ def recieveInternet(message, info, info2):
     pass
 
 
+###################################################
 def processFoto(message, info, info2):
     """Process a foto.
 
@@ -194,10 +204,12 @@ def processFoto(message, info, info2):
     pass
 
 
+###################################################
 # def processInfo():
 #     pass
 
 
+###################################################
 def processVideo():
     """Process a video clip.
 
@@ -209,6 +221,7 @@ def processVideo():
     pass
 
 
+###################################################
 def processHumanSpeech(message, info, info2):
     """Process a voice clip.
 
@@ -229,15 +242,18 @@ def processHumanSpeech(message, info, info2):
     pass
 
 
+###################################################
 # def shutdown():
 #     pass
 
 
+###################################################
 def f_default(*args, **kwargs):
     """Execute default message when switch does not work."""
     print("Received a message I have no idea what to do with.")
 
 
+###################################################
 def processMessage(case):
     """Message processing switch function.
 
