@@ -49,6 +49,7 @@ def activateCam1(numberOfFotos, sleepTime):
     None.
 
     """
+    # os.system("ssh pi command")
     subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
 
 
