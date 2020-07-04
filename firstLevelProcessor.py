@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-"""Physical proessing program.
+
+"""Physical processing program.
 
 # first level message processing program.
 # this processes incoming data from sensors, visual, audio, sonar etc
 
 # by Christopher Rehm. 15 dec 2019
-# add a comment for submodule testing ;
-#if it works once try it a second time in the opposite direction ;
 """
 
 import os
@@ -17,8 +16,6 @@ import grendelShares.grendelconfig as gc
 
 import subprocess
 import datetime
-
-DEBUG = True
 
 
 ############################################################
@@ -34,6 +31,7 @@ def shutdownMe():
     pass
 
 
+##################################################
 def activateCam1(numberOfFotos, sleepTime):
     """Activate camera 1.
 
@@ -53,6 +51,7 @@ def activateCam1(numberOfFotos, sleepTime):
     subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
 
 
+###################################################
 def activateCam2(numberOfFotos, sleepTime):
     """Activate camera 2.
 
@@ -71,6 +70,7 @@ def activateCam2(numberOfFotos, sleepTime):
     subprocess.call("/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
 
 
+###################################################
 def activateHearing():
     """Activate hearing microphones.
 
@@ -82,6 +82,7 @@ def activateHearing():
     pass
 
 
+###################################################
 def deactivateHearing():
     """Deactivate hearing microphones.
 
@@ -93,6 +94,7 @@ def deactivateHearing():
     pass
 
 
+###################################################
 def sendInternetInquiry():
     """Send internet inquiry.
 
@@ -104,6 +106,7 @@ def sendInternetInquiry():
     pass
 
 
+###################################################
 def moveHead(amount, direction):
     """Move head.
 
@@ -122,6 +125,7 @@ def moveHead(amount, direction):
     pass
 
 
+###################################################
 def moveWiglaf(distance, direction):
     """Move wieglaf somewhere.
 
@@ -140,6 +144,7 @@ def moveWiglaf(distance, direction):
     pass
 
 
+###################################################
 def moveAsmo(distance, direction):
     """Move asmo somewhere.
 
@@ -158,6 +163,7 @@ def moveAsmo(distance, direction):
     pass
 
 
+###################################################
 def recieveInternet(message, info, info2):
     """Recieve internet message.
 
@@ -178,6 +184,7 @@ def recieveInternet(message, info, info2):
     pass
 
 
+###################################################
 def processFoto(message, info, info2):
     """Process a foto.
 
@@ -198,10 +205,12 @@ def processFoto(message, info, info2):
     pass
 
 
+###################################################
 # def processInfo():
 #     pass
 
 
+###################################################
 def processVideo():
     """Process a video clip.
 
@@ -213,6 +222,7 @@ def processVideo():
     pass
 
 
+###################################################
 def processHumanSpeech(message, info, info2):
     """Process a voice clip.
 
@@ -233,15 +243,18 @@ def processHumanSpeech(message, info, info2):
     pass
 
 
+###################################################
 # def shutdown():
 #     pass
 
 
-def f_default():
+###################################################
+def f_default(*args, **kwargs):
     """Execute default message when switch does not work."""
     print("Received a message I have no idea what to do with.")
 
 
+###################################################
 def processMessage(case):
     """Message processing switch function.
 
@@ -266,9 +279,9 @@ def processMessage(case):
 
 
 ########################################################
+counter = 0
 firsttime = True
 run = True
-gc.debugBreakPoint("-+-+-+starting firstlevelprocessor+-+-+-", "FLP")
 if firsttime is True:
     os.chdir(gc.msgPathPY)
     gc.makeMsg("PY",
@@ -280,35 +293,14 @@ if firsttime is True:
                "NONE")
     firsttime = False
 while (run is True):
-    gc.debugBreakPoint("Starting PY loop", "firstLevelProcessor")
     # check for incoming new message
     print(datetime.datetime.now().time())
-    gc.debugBreakPoint("Now getting messages for flp", "flp")
     newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
         mymessage = gc.message()
-        gc.debugBreakPoint(each, "process loop-- first level processor")
         mydata = mymessage.read(each, "PY")
         # select a processing program and a location to run  process
         processMessage(mymessage.title)(gc.message)
-        # if mymessage.title == "newfoto":
-        #     # print(msgDataPiece)
-        #     if DEBUG is True: print("sending new foto data for processing")
-        #     # send off command to do process
-        # elif mymessage.title == "newaudio":
-        #     if DEBUG is True: print("sending new audio data for processing")
-        #     # send off command to do process
-        # elif mymessage.title == "newtext":
-        #     if DEBUG is True: print("sending new text data for processing")
-        #     # send off command to do process
-        # elif mymessage.title == "shutdown":
-        #     os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
-        #     # save any data
-        #     shutdownMe()
-        #     sys.exit()
-        # else:
-        #     if DEBUG is True: print("I don't know how to process that data")
-        # move message to processed folder
         os.system('mv '
                   + gc.msgPathPY
                   + "/"
@@ -316,13 +308,11 @@ while (run is True):
                   + ' '
                   + gc.msgPath
                   + '/processedMsgs/')
-    gc.makeMsg("PY",
-               "testttttt",
-               "arggggg blahblahblah and blah",
-               "7",
-               "AI",
-               "NOONE",
-               "NONE")
-    # os.system('mv ' + gc.msgPathPY + "/" + each + ' ' + gc.msgPath + '/processedMsgs/')
-
-    gc.debugBreakPoint("End loop", "firstLevelProcessor")
+    if counter % 100000 == 0:
+        gc.makeMsg("PY",
+                   "100000 Cycle message",
+                   "marks 100000 more cycles from startup",
+                   "7",
+                   "AI",
+                   "NOONE",
+                   "NONE")
