@@ -9,9 +9,8 @@
 """
 
 import os
+# import sys
 # import time
-import sys
-sys.path.append('../')
 import grendelShares.grendelconfig as gc
 # import grendelShares.i2cComm as i2CC
 
@@ -296,7 +295,6 @@ if firsttime is True:
 while (run is True):
     # check for incoming new message
     print(datetime.datetime.now().time())
-    print("at top of processing loop")
     newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
         mymessage = gc.message()
