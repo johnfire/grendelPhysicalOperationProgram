@@ -9,14 +9,13 @@
 """
 
 import os
-# import time
 import sys
+import logging
+import subprocess
+import datetime
 sys.path.append('../')
 import grendelShares.grendelconfig as gc
 # import grendelShares.i2cComm as i2CC
-
-import subprocess
-import datetime
 
 
 ############################################################
@@ -280,9 +279,13 @@ def processMessage(case):
 
 
 ########################################################
-counter = 0
+counter = 1
 firsttime = True
 run = True
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - AIprogram - %(process)d - %(levelname)s - %(message)s',
+                    filename='grendel_logs_file',
+                    filemode='a')
 if firsttime is True:
     os.chdir(gc.msgPathPY)
     gc.makeMsg("PY",
@@ -295,14 +298,17 @@ if firsttime is True:
     firsttime = False
 while (run is True):
     # check for incoming new message
-    print(datetime.datetime.now().time())
-    print("at top of processing loop")
+    # print(datetime.datetime.now().time())
+    # print("at top of processing loop")
     newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
+        logging.info('processing a message')
+        # print(each)
         mymessage = gc.message()
         mydata = mymessage.read(each, "PY")
         # select a processing program and a location to run  process
         processMessage(mymessage.title)(gc.message)
+        # print(gc.msgPathPY+"/"+each)
         os.system('mv '
                   + gc.msgPathPY
                   + "/"
@@ -310,11 +316,17 @@ while (run is True):
                   + ' '
                   + gc.msgPath
                   + '/processedMsgs/')
-    if counter % 100000 == 0:
+    if counter % 10000 == 0:
+        # print(counter)
         gc.makeMsg("PY",
                    "100000 Cycle message",
                    "marks 100000 more cycles from startup",
-                   "7",
+                   counter,
                    "AI",
                    "NOONE",
                    "NONE")
+        # input("enter anything to continue")
+
+    counter += 1
+    # print(counter)
+    logging.info('finished a loop in phy')
