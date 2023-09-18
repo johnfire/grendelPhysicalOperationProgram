@@ -302,8 +302,8 @@ if firsttime is True:
 while run is True:
     time.sleep(gc.SLEEP_TIME_FOR_DEBUGGING)
     # check for incoming new message
-    # print(datetime.datetime.now().time())
-    # print("at top of processing loop")
+    print(datetime.datetime.now().time())
+    print("at top of processing loop")
     newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
         logging.info("processing a message")
