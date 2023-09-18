@@ -13,8 +13,11 @@ import sys
 import logging
 import subprocess
 import datetime
-sys.path.append('../')
+import time
+
+sys.path.append("../")
 import grendelShares.grendelconfig as gc
+
 # import grendelShares.i2cComm as i2CC
 
 
@@ -48,7 +51,9 @@ def activateCam1(numberOfFotos, sleepTime):
 
     """
     # os.system("ssh pi command")
-    subprocess.call("/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime)
+    subprocess.call(
+        "/media/grendel102/grendelSmallPrograms/camN.py", numberOfFotos, sleepTime
+    )
 
 
 ###################################################
@@ -67,7 +72,9 @@ def activateCam2(numberOfFotos, sleepTime):
     None.
 
     """
-    subprocess.call("/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime)
+    subprocess.call(
+        "/media/grendel102/grendelSmallPrograms/camIR.py", numberOfFotos, sleepTime
+    )
 
 
 ###################################################
@@ -274,59 +281,54 @@ def processMessage(case):
         "newfoto": processFoto,
         "newaudio": processHumanSpeech,
         "newvideo": processVideo,
-        "shutdown": shutdownMe
-        }.get(case, f_default)
+        "shutdown": shutdownMe,
+    }.get(case, f_default)
 
 
 ########################################################
 counter = 1
 firsttime = True
 run = True
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - AIprogram - %(process)d - %(levelname)s - %(message)s',
-                    filename='grendel_logs_file',
-                    filemode='a')
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - AIprogram - %(process)d - %(levelname)s - %(message)s",
+    filename="grendel_logs_file",
+    filemode="a",
+)
 if firsttime is True:
     os.chdir(gc.msgPathPY)
-    gc.makeMsg("PY",
-               "Py startup",
-               "starting py program",
-               "3",
-               "AI",
-               "NOONE",
-               "NONE")
+    gc.makeMsg("PY", "Py startup", "starting py program", "3", "AI", "NOONE", "NONE")
     firsttime = False
-while (run is True):
+while run is True:
+    time.sleep(gc.SLEEP_TIME_FOR_DEBUGGING)
     # check for incoming new message
     # print(datetime.datetime.now().time())
     # print("at top of processing loop")
     newMsgs = os.listdir(gc.msgPathPY)
     for each in newMsgs:
-        logging.info('processing a message')
+        logging.info("processing a message")
         # print(each)
         mymessage = gc.message()
         mydata = mymessage.read(each, "PY")
         # select a processing program and a location to run  process
         processMessage(mymessage.title)(gc.message)
         # print(gc.msgPathPY+"/"+each)
-        os.system('mv '
-                  + gc.msgPathPY
-                  + "/"
-                  + each
-                  + ' '
-                  + gc.msgPath
-                  + '/processedMsgs/')
+        os.system(
+            "mv " + gc.msgPathPY + "/" + each + " " + gc.msgPath + "/processedMsgs/"
+        )
     if counter % 10000 == 0:
         # print(counter)
-        gc.makeMsg("PY",
-                   "100000 Cycle message",
-                   "marks 100000 more cycles from startup",
-                   counter,
-                   "AI",
-                   "NOONE",
-                   "NONE")
+        gc.makeMsg(
+            "PY",
+            "100000 Cycle message",
+            "marks 100000 more cycles from startup",
+            counter,
+            "AI",
+            "NOONE",
+            "NONE",
+        )
         # input("enter anything to continue")
 
     counter += 1
     # print(counter)
-    logging.info('finished a loop in phy')
+    logging.info("finished a loop in phy")
